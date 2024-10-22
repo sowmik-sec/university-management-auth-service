@@ -7,12 +7,14 @@
     "dev": "tsc --watch",
     "lint": "eslint --ext .js,.ts .",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "lint-prettier": "npm lint && npm prettier:check",
+    "lint-prettier": "npm run lint && npm run prettier:check",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "src/**/*.ts": "npm lint-prettier"
+    "src/**/*.ts": [
+      "npm run lint-prettier"
+    ]
   },
   "keywords": [],
   "author": "",
