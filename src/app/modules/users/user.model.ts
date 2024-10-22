@@ -1,3 +1,4 @@
+// THIS CODE SHOULD BE IN BRANCH SCRUM-5
 import { model, Model, Schema } from 'mongoose'
 import { IUser } from './user.interface'
 
