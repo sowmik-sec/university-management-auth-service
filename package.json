@@ -4,16 +4,17 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "dev": "tsc --watch",
-    "lint": "eslint --ext .js,.ts .",
-    "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "lint-prettier": "npm run lint && npm run prettier:check",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "lint": "eslint src",
+    "prettier:check": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json)\"",
+    "lint-prettier": "npm run prettier:check && npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.ts": [
-      "npm run lint-prettier"
+      "npm run prettier:check",
+      "npm run lint"
     ]
   },
   "keywords": [],
@@ -23,11 +24,16 @@
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@types/cors": "^2.8.17",
+    "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
-    "eslint": "^9.13.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0",
     "globals": "^15.11.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
