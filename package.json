@@ -6,7 +6,7 @@
     "start": "ts-node-dev --respawn --transpile-only src/server.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "eslint src",
-    "prettier:check": "prettier --ignore-path .gitignore --check \"**/*.+(js|ts|json)\"",
+    "prettier:check": "prettier --ignore-path .eslintignore --check \"**/*.+(js|ts|json)\"",
     "lint-prettier": "npm run prettier:check && npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"

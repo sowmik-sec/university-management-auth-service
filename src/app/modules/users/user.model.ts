@@ -1,8 +1,6 @@
 // THIS CODE SHOULD BE IN BRANCH SCRUM-5
-import { model, Model, Schema } from 'mongoose'
-import { IUser } from './user.interface'
-
-type UserModel = Model<IUser, object>
+import { model, Schema } from 'mongoose'
+import { IUser, UserModel } from './user.interface'
 
 const userSchema = new Schema<IUser>(
   {
