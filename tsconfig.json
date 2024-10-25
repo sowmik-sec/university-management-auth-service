@@ -1,5 +1,8 @@
 {
-  "include": ["src"], // which files to compile
+  "include": [
+    "src/**/*.ts"
+    // "eslint.config.mjs" // Add this to include ESLint config
+  ],
   "exclude": ["node_modules"], // which files to skip
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
