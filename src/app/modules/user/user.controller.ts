@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { RequestHandler } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { UserService } from './user.service'
+import { catchAsync } from '../../../shsred/catchAsync'
+import sendResponse from '../../../shsred/sendResponse'
 // import { z } from 'zod'
-const createUser: RequestHandler = async (req, res, next) => {
-  try {
+const createUser: RequestHandler = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const { user } = req.body
     const result = await UserService.createUser(user)
-    res.status(200).json({
+    next()
+    // res.status(200).json({
+    //   success: true,
+    //   message: 'User created successfully!',
+    //   data: result,
+    // })
+    sendResponse(res, {
       success: true,
-      message: 'User created successfully!',
+      message: 'User Created Successfully',
+      statusCode: 200,
       data: result,
     })
-  } catch (err) {
-    console.log(err)
-    next(err)
-  }
-}
+  },
+)
 
 export const UserController = { createUser }
