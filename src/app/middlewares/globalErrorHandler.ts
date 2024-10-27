@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ErrorRequestHandler } from 'express'
+import { ErrorRequestHandler, Response, Request } from 'express'
 import config from '../../config'
 import IGenericErrorMessage from '../interfaces/error'
 import handleValidationError from '../errors/handleValidationError'
 import ApiError from '../errors/ApiError'
 import { errorLogger } from '../../shsred/logger'
+import { ZodError } from 'zod'
+import handleZodError from '../errors/handleZodError'
 
-const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
+const globalErrorHandler: ErrorRequestHandler = (
+  error,
+  req: Request,
+  res: Response,
+) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   config.env === 'development'
     ? console.log(`🐱‍🏍 globalErrorHandler ~~`, { error })
@@ -18,6 +24,11 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let errorMessages: IGenericErrorMessage[] = []
   if (error?.name === 'ValidationError') {
     const simplifiedError = handleValidationError(error)
+    statusCode = simplifiedError.statusCode
+    message = simplifiedError.message
+    errorMessages = simplifiedError.errorMessages
+  } else if (error instanceof ZodError) {
+    const simplifiedError = handleZodError(error)
     statusCode = simplifiedError.statusCode
     message = simplifiedError.message
     errorMessages = simplifiedError.errorMessages
@@ -49,7 +60,6 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     errorMessages,
     stack: config.env !== 'production' ? error?.stack : undefined,
   })
-  next()
 }
 
 export default globalErrorHandler

@@ -41,9 +41,9 @@ async function main() {
 
 main().catch(err => logger.error(err))
 
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM is received')
-  if (server) {
-    server.close()
-  }
-})
+// process.on('SIGTERM', () => {
+//   logger.info('SIGTERM is received')
+//   if (server) {
+//     server.close()
+//   }
+// })

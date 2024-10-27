@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { RequestHandler } from 'express'
 import { UserService } from './user.service'
+// import { z } from 'zod'
 const createUser: RequestHandler = async (req, res, next) => {
   try {
     const { user } = req.body
@@ -12,6 +13,7 @@ const createUser: RequestHandler = async (req, res, next) => {
       data: result,
     })
   } catch (err) {
+    console.log(err)
     next(err)
   }
 }
