@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { ErrorRequestHandler, Response, Request } from 'express'
+import { ErrorRequestHandler, Response, Request, NextFunction } from 'express'
 import config from '../../config'
 import IGenericErrorMessage from '../interfaces/error'
 import handleValidationError from '../errors/handleValidationError'
@@ -14,6 +14,8 @@ const globalErrorHandler: ErrorRequestHandler = (
   error,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction,
 ) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   config.env === 'development'
