@@ -1,5 +1,6 @@
 // THIS CODE SHOULD BE IN BRANCH SCRUM-5
 import { model, Schema } from 'mongoose'
+
 import {
   AcademicSemesterModel,
   IAcademicSemester,
@@ -9,6 +10,7 @@ import {
   academicSemesterMonths,
   academicSemesterTitles,
 } from './academicSemester.constant'
+import ApiError from '../../errors/ApiError'
 
 const academicSemesterSchema = new Schema<IAcademicSemester>(
   {
@@ -39,6 +41,18 @@ const academicSemesterSchema = new Schema<IAcademicSemester>(
   },
   { timestamps: true },
 )
+
+// handling same year and same semester issue
+academicSemesterSchema.pre('save', async function (next) {
+  const isExist = await AcademicSemester.findOne({
+    title: this.title,
+    year: this.year,
+  })
+  if (isExist) {
+    throw new ApiError(409, 'Academic Semester is already exists')
+  }
+  next()
+})
 
 export const AcademicSemester = model<IAcademicSemester, AcademicSemesterModel>(
   'AcademicSemester',
