@@ -1,4 +1,4 @@
-import express, { Application } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 const app: Application = express()
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
@@ -12,6 +12,21 @@ app.use(express.urlencoded({ extended: true }))
 
 // global error handler
 app.use(globalErrorHandler)
+
+// handle not found
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(404).json({
+    success: false,
+    message: 'Not Found',
+    errorMessages: [
+      {
+        path: req.originalUrl,
+        message: 'Api not found',
+      },
+    ],
+  })
+  next()
+})
 
 // application routes
 
