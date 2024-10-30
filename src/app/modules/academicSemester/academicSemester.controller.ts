@@ -4,6 +4,9 @@ import { AcademicSemesterService } from './academicSemester.service'
 import { catchAsync } from '../../../shsred/catchAsync'
 import { NextFunction, Request, Response } from 'express'
 import sendResponse from '../../../shsred/sendResponse'
+import pick from '../../../shsred/pick'
+import { paginationFields } from '../../../constants/pagination'
+import { IAcademicSemester } from './academicSemester.interface'
 // import { z } from 'zod'
 const createSemester = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -20,4 +23,22 @@ const createSemester = catchAsync(
     next()
   },
 )
-export const AcademicSemesterController = { createSemester }
+
+const getAllSemesters = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const paginationOptions = pick(req.query, paginationFields)
+    const result =
+      await AcademicSemesterService.getAllSemesters(paginationOptions)
+
+    sendResponse<IAcademicSemester[]>(res, {
+      success: true,
+      message: 'Semester retrieved successfully',
+      statusCode: 200,
+      meta: result.meta,
+      data: result.data,
+    })
+    next()
+  },
+)
+
+export const AcademicSemesterController = { createSemester, getAllSemesters }
