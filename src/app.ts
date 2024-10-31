@@ -10,6 +10,10 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// application routes
+
+app.use('/api/v1', routes)
+
 // global error handler
 app.use(globalErrorHandler)
 
@@ -27,10 +31,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   })
   next()
 })
-
-// application routes
-
-app.use('/api/v1', routes)
 
 // app.use('/api/v1/user', UserRoutes)
 // app.use('/api/v1/academic-semesters', AcademicSemesterRoutes)
