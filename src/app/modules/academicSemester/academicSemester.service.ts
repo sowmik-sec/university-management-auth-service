@@ -4,7 +4,10 @@ import ApiError from '../../errors/ApiError'
 import { IGenericResponse } from '../../interfaces/common'
 import IPaginationOptions from '../../interfaces/pagination'
 import { academicSemesterTitleCodeMapper } from './academicSemester.constant'
-import { IAcademicSemester } from './academicSemester.interface'
+import {
+  IAcademicSemester,
+  IAcademicSemesterFilters,
+} from './academicSemester.interface'
 import { AcademicSemester } from './academicSemester.model'
 
 const createSemester = async (
@@ -19,6 +22,7 @@ const createSemester = async (
 }
 
 const getAllSemesters = async (
+  filters: IAcademicSemesterFilters,
   paginationOptions: IPaginationOptions,
 ): Promise<IGenericResponse<IAcademicSemester[]>> => {
   const { page, limit, skip, sortBy, sortOrder } =
