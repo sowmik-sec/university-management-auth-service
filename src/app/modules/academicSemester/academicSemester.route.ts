@@ -11,7 +11,11 @@ router.post(
   AcademicSemesterController.createSemester,
 )
 
-router.patch('/:id', AcademicSemesterController.updateSemester)
+router.patch(
+  '/:id',
+  validateRequest(AcademicSemesterValidation.updateAcademicSemesterSchema),
+  AcademicSemesterController.updateSemester,
+)
 
 router.get('/:id', AcademicSemesterController.getSingleSemester)
 
