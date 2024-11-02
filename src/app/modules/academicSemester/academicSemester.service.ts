@@ -25,13 +25,56 @@ const getAllSemesters = async (
   filters: IAcademicSemesterFilters,
   paginationOptions: IPaginationOptions,
 ): Promise<IGenericResponse<IAcademicSemester[]>> => {
+  const { searchTerm } = filters
+
+  const academicSemesterSearchableFields = ['title', 'code', 'year']
+  const andConditions = []
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: academicSemesterSearchableFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+
+  // const andConditions = [
+  //   {
+  //     $or: [
+  //       {
+  //         title: {
+  //           $regex: searchTerm,
+  //           $options: 'i',
+  //         },
+  //       },
+  //       {
+  //         code: {
+  //           $regex: searchTerm,
+  //           $options: 'i',
+  //         },
+  //       },
+  //       {
+  //         year: {
+  //           $regex: searchTerm,
+  //           $options: 'i',
+  //         },
+  //       },
+  //     ],
+  //   },
+  // ]
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions)
   const sortConditions: { [key: string]: SortOrder } = {}
   if (sortBy && sortOrder) {
     sortConditions[sortBy] = sortOrder
   }
-  const result = await AcademicSemester.find().sort().skip(skip).limit(limit)
+  const result = await AcademicSemester.find({ $and: andConditions })
+    .sort()
+    .skip(skip)
+    .limit(limit)
   const total = await AcademicSemester.countDocuments()
   return {
     meta: {
