@@ -11,8 +11,10 @@ router.post(
   AcademicSemesterController.createSemester,
 )
 
-router.get('/', AcademicSemesterController.getAllSemesters)
+router.patch('/:id', AcademicSemesterController.updateSemester)
 
 router.get('/:id', AcademicSemesterController.getSingleSemester)
+
+router.get('/', AcademicSemesterController.getAllSemesters)
 
 export const AcademicSemesterRoutes = router
