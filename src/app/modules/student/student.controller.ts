@@ -7,6 +7,7 @@ import pick from '../../../shsred/pick'
 import { paginationFields } from '../../../constants/pagination'
 import { IStudent } from './student.interface'
 import { studentFilterableFields } from './student.constant'
+import { StudentService } from './student.service'
 
 const getAllStudents = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, studentFilterableFields)
