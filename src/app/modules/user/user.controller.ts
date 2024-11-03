@@ -5,10 +5,10 @@ import { UserService } from './user.service'
 import { catchAsync } from '../../../shsred/catchAsync'
 import sendResponse from '../../../shsred/sendResponse'
 // import { z } from 'zod'
-const createUser: RequestHandler = catchAsync(
+const createStudent: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { ...userData } = req.body
-    const result = await UserService.createUser(userData)
+    const { student, ...userData } = req.body
+    const result = await UserService.createStudent(student, userData)
 
     // res.status(200).json({
     //   success: true,
@@ -24,4 +24,4 @@ const createUser: RequestHandler = catchAsync(
   },
 )
 
-export const UserController = { createUser }
+export const UserController = { createStudent }
