@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { NextFunction, Request, RequestHandler, Response } from 'express'
+import { Request, RequestHandler, Response } from 'express'
 import { UserService } from './user.service'
 import { catchAsync } from '../../../shsred/catchAsync'
 import sendResponse from '../../../shsred/sendResponse'
 // import { z } from 'zod'
 const createUser: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { user } = req.body
     const result = await UserService.createUser(user)
 
@@ -21,7 +21,6 @@ const createUser: RequestHandler = catchAsync(
       statusCode: 200,
       data: result,
     })
-    next()
   },
 )
 
