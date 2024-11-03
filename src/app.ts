@@ -3,7 +3,10 @@ const app: Application = express()
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import routes from './app/routes'
-import { generateStudentId } from './app/modules/user/user.utils'
+import {
+  generateFacultyId,
+  generateStudentId,
+} from './app/modules/user/user.utils'
 // import { UserRoutes } from './app/modules/user/user.route'
 // import { AcademicSemesterRoutes } from './app/modules/academicSemester/academicSemester.route'
 
@@ -49,7 +52,7 @@ const academicSemester = {
 }
 
 const testId = async () => {
-  const testId = await generateStudentId(academicSemester)
+  const testId = await generateFacultyId()
   console.log(testId)
 }
 

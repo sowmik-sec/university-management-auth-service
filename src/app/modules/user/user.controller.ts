@@ -7,8 +7,8 @@ import sendResponse from '../../../shsred/sendResponse'
 // import { z } from 'zod'
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { user } = req.body
-    const result = await UserService.createUser(user)
+    const { ...userData } = req.body
+    const result = await UserService.createUser(userData)
 
     // res.status(200).json({
     //   success: true,
