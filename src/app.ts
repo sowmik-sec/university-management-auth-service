@@ -3,7 +3,6 @@ const app: Application = express()
 import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import routes from './app/routes'
-import { generateStudentId } from './app/modules/user/user.utils'
 // import { UserRoutes } from './app/modules/user/user.route'
 // import { AcademicSemesterRoutes } from './app/modules/academicSemester/academicSemester.route'
 
@@ -42,17 +41,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 //   // next('Ore baba error')
 //   // console.log(x)
 // })
-
-const academicSemester = {
-  code: '01',
-  year: '2025',
-}
-
-const testId = async () => {
-  const testId = await generateStudentId(academicSemester)
-  console.log(testId)
-}
-
-testId()
 
 export default app
