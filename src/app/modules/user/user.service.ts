@@ -10,7 +10,7 @@ import { Student } from '../student/student.model'
 const createStudent = async (
   student: IStudent,
   user: IUser,
-): Promise<IUser | null> => {
+): Promise<IUser | null | undefined> => {
   // default password
   if (!user.password) {
     user.password = config.default_student_pass as string

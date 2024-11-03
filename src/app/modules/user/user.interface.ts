@@ -1,4 +1,5 @@
 import { Model, Types } from 'mongoose'
+import { IStudent } from '../student/student.interface'
 
 // THIS CODE SHOULD BE IN BRANCH SCRUM-5
 export type IUser = {
