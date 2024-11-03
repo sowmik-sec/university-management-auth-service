@@ -5,6 +5,7 @@ import IPaginationOptions from '../../interfaces/pagination'
 import { IStudent, IStudentFilters } from './student.interface'
 import { studentSearchableFields } from './student.constant'
 import { Student } from './student.model'
+import ApiError from '../../errors/ApiError'
 
 const getAllStudents = async (
   filters: IStudentFilters,
@@ -92,15 +93,32 @@ const getSingleStudent = async (id: string): Promise<IStudent | null> => {
     .populate('academicFaculty')
   return result
 }
-// const updateStudent = async (
-//   id: string,
-//   payload: Partial<IStudent>,
-// ): Promise<IStudent | null> => {
-//   const result = await Student.findOneAndUpdate({ _id: id }, payload, {
-//     new: true,
-//   })
-//   return result
-// }
+const updateStudent = async (
+  id: string,
+  payload: Partial<IStudent>,
+): Promise<IStudent | null> => {
+  const isExist = await Student.findOne({ id })
+  if (!isExist) {
+    throw new ApiError(404, 'Student not found')
+  }
+
+  const { name, gurdian, localGuardian, ...studentData } = payload
+
+  const updatedStudentData: Partial<IStudent> = { ...studentData }
+
+  if (name && Object.keys(name).length > 0) {
+    Object.keys(name).forEach(key => {
+      const nameKey = `name.${key}`
+      updatedStudentData[nameKey as keyof Partial<IStudent>] =
+        name[key as keyof typeof name]
+    })
+  }
+
+  const result = await Student.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  })
+  return result
+}
 
 const deleteStudent = async (id: string): Promise<IStudent | null> => {
   const result = await Student.findByIdAndDelete(id)
